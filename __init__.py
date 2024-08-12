@@ -1,22 +1,24 @@
 NODE_CLASS_MAPPINGS = {}
+IMPORT_ERROR_MESSAGE = "!!!!! \n \n Lunar Ring Nodes: failed to import"
+
 try:
     from .comfy.display_window import Renderer
     NODE_CLASS_MAPPINGS["LR RenderWindow"] = Renderer
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import display_window: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} display_window: {e}")
 
 try:
     from .comfy.cam import LRWebCam
     NODE_CLASS_MAPPINGS["LR WebCam"] = LRWebCam
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import cam: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} cam: {e}")
 
 try:
     from .comfy.midi import LRMidiInputAkaiLPD8, LRMidiInputAkaiMidimix
     NODE_CLASS_MAPPINGS["LR MidiController AkaiLPD8"] = LRMidiInputAkaiLPD8
     NODE_CLASS_MAPPINGS["LR MidiController AkaiMidimix"] = LRMidiInputAkaiMidimix
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import midi: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} midi: {e}")
 
 try:
     from .comfy.comms import LROSCSender, LRZMQSender, LRZMQReceiver
@@ -25,49 +27,44 @@ try:
     NODE_CLASS_MAPPINGS["LR ZMQReceiver"] = LRZMQReceiver
     # NODE_CLASS_MAPPINGS["LR OSCReceiver"] = LROSCReceiver
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import utils: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 
 try:
     from .comfy.ip_webcam import LRIPWebcam
     NODE_CLASS_MAPPINGS["LR IPWebcam"] = LRIPWebcam
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import ip_webcam: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} ip_webcam: {e}")
 
 try:
     from .comfy.sound_reactive import LRSoundReactive
     NODE_CLASS_MAPPINGS["LR SoundReactive"] = LRSoundReactive
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import sound_reactive: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} sound_reactive: {e}")
 
 try:
     from .comfy.arduino_button import LRPushButtonArduino
     NODE_CLASS_MAPPINGS["LR PushButtonArduino"] = LRPushButtonArduino
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import push_button: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} push_button: {e}")
 
 try:
     from .comfy.drawing_canvas import LRDrawingCanvas
     NODE_CLASS_MAPPINGS["LR DrawingCanvas"] = LRDrawingCanvas
 except Exception as e:
-    print(f"Lunar Ring Nodes: failed to import drawing_canvas: {e}")
+    print(f"{IMPORT_ERROR_MESSAGE} drawing_canvas: {e}")
     
-
-
-# try:
-#     from .ghosting import LRGhostingGenerator
-#     NODE_CLASS_MAPPINGS["LR GhostingGenerator"] = LRGhostingGenerator
-# except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import ghosting_generator: {e}")
+try:
+    from .comfy.ghosting import LRGhostingGenerator
+    NODE_CLASS_MAPPINGS["LR GhostingGenerator"] = LRGhostingGenerator
+except Exception as e:
+    print(f"{IMPORT_ERROR_MESSAGE} ghosting_generator: {e}")
     
-
-
-# try:
-#     from .prompt_builder import LRGPT4Vision, LRMic2Text
-#     # NODE_CLASS_MAPPINGS["LR PromptBuilder"] = LRPromptBuilder
-#     NODE_CLASS_MAPPINGS["LR GPT4Vision"] = LRGPT4Vision
-#     NODE_CLASS_MAPPINGS["LR Mic2Text"] = LRMic2Text
-# except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import prompt_builder, gpt4vision, or mic2text: {e}")
+try:
+    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text
+    NODE_CLASS_MAPPINGS["LR GPT4Vision"] = LRGPT4Vision
+    NODE_CLASS_MAPPINGS["LR Mic2Text"] = LRMic2Text
+except Exception as e:
+    print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
     
 # try:
@@ -81,4 +78,4 @@ except Exception as e:
 #     NODE_CLASS_MAPPINGS["LR EquationEvaluator"] = EquationEvaluator
 #     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
 # except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import utils: {e}")
+#     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
