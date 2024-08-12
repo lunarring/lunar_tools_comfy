@@ -8,19 +8,11 @@ class LRSoundReactive:
         
     @classmethod
     def INPUT_TYPES(s):
-        return {
-            "required": {
-                "dummy": ("INT", {"default": 44100, 
-                "min": 44100,
-                "max": 44100,
-                "step": 0,
-                "display": "number"})
-                }
-        }
+        return {}
     
     @classmethod 
     def IS_CHANGED(self):
-        return True    
+        return float("nan")
             
     RETURN_TYPES = ("FLOAT", )  
     RETURN_NAMES = ("Sound level", )
