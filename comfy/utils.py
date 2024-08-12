@@ -4,7 +4,6 @@ import time
 import numpy as np
 import lunar_tools as lt
 import re
-from ..utils import SimpleNumberBuffer, scale_variable
 
 class LRScaleVariable:
     def __init__(self):
@@ -48,7 +47,7 @@ class LRScaleVariable:
         Returns:
         float: The scaled variable.
         """
-        return (scale_variable(variable, min_input, max_input, min_output, max_output),)
+        return (lt.scale_variable(variable, min_input, max_input, min_output, max_output),)
 
 
 
@@ -103,7 +102,7 @@ class MovingWindowCalculator:
     
     def __init__(self):
         self.window_size = self.DEFAULT_WINDOW_SIZE
-        self.buffer = SimpleNumberBuffer(buffer_size=self.window_size)
+        self.buffer = lt.SimpleNumberBuffer(buffer_size=self.window_size)
 
     @classmethod
     def IS_CHANGED(self):
@@ -161,7 +160,7 @@ class LRNumberBuffer:
     DEFAULT_BUFFER_SIZE = 500
 
     def __init__(self):
-        self.number_buffer = SimpleNumberBuffer(self.DEFAULT_BUFFER_SIZE)
+        self.number_buffer = lt.SimpleNumberBuffer(self.DEFAULT_BUFFER_SIZE)
 
     @classmethod 
     def IS_CHANGED(self):

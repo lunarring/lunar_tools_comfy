@@ -1,5 +1,5 @@
 NODE_CLASS_MAPPINGS = {}
-IMPORT_ERROR_MESSAGE = "\n\n!!!!!Lunar Ring Nodes: failed to import"
+IMPORT_ERROR_MESSAGE = "Lunar Ring Nodes: failed to import"
 
 try:
     from .comfy.display_window import Renderer
