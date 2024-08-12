@@ -39,11 +39,11 @@ try:
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import sound_reactive: {e}")
 
-# try:
-#     from .push_button import LRPushButtonArduino
-#     NODE_CLASS_MAPPINGS["LR PushButtonArduino"] = LRPushButtonArduino
-# except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import push_button: {e}")
+try:
+    from .arduino_button import LRPushButtonArduino
+    NODE_CLASS_MAPPINGS["LR PushButtonArduino"] = LRPushButtonArduino
+except Exception as e:
+    print(f"Lunar Ring Nodes: failed to import push_button: {e}")
 
 
 # try:

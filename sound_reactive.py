@@ -20,7 +20,7 @@ class LRSoundReactive:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/sources"
 
-    def get_sound_level(self, dummy):
+    def get_sound_level(self):
         volume = self.sound_volume.get_last()
         
         return ([volume])
