@@ -45,15 +45,12 @@ try:
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import push_button: {e}")
 
-
-# try:
-#     from .drawing_canvas import LRDrawingCanvas
-#     NODE_CLASS_MAPPINGS["LR DrawingCanvas"] = LRDrawingCanvas
-# except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import drawing_canvas: {e}")
+try:
+    from .drawing_canvas import LRDrawingCanvas
+    NODE_CLASS_MAPPINGS["LR DrawingCanvas"] = LRDrawingCanvas
+except Exception as e:
+    print(f"Lunar Ring Nodes: failed to import drawing_canvas: {e}")
     
-
-
 
 
 # try:
