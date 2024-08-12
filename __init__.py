@@ -33,13 +33,11 @@ try:
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import ip_webcam: {e}")
 
-
-
-# try:
-#     from .sound_reactive import LRSoundReactive
-#     NODE_CLASS_MAPPINGS["LR SoundReactive"] = LRSoundReactive
-# except Exception as e:
-#     print(f"Lunar Ring Nodes: failed to import sound_reactive: {e}")
+try:
+    from .sound_reactive import LRSoundReactive
+    NODE_CLASS_MAPPINGS["LR SoundReactive"] = LRSoundReactive
+except Exception as e:
+    print(f"Lunar Ring Nodes: failed to import sound_reactive: {e}")
 
 # try:
 #     from .push_button import LRPushButtonArduino
