@@ -1,25 +1,25 @@
 NODE_CLASS_MAPPINGS = {}
 try:
-    from .display_window import Renderer
+    from .comfy.display_window import Renderer
     NODE_CLASS_MAPPINGS["LR RenderWindow"] = Renderer
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import display_window: {e}")
 
 try:
-    from .cam import LRWebCam
+    from .comfy.cam import LRWebCam
     NODE_CLASS_MAPPINGS["LR WebCam"] = LRWebCam
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import cam: {e}")
 
 try:
-    from .midi import LRMidiInputAkaiLPD8, LRMidiInputAkaiMidimix
+    from .comfy.midi import LRMidiInputAkaiLPD8, LRMidiInputAkaiMidimix
     NODE_CLASS_MAPPINGS["LR MidiController AkaiLPD8"] = LRMidiInputAkaiLPD8
     NODE_CLASS_MAPPINGS["LR MidiController AkaiMidimix"] = LRMidiInputAkaiMidimix
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import midi: {e}")
 
 try:
-    from .comms import LROSCSender, LRZMQSender, LRZMQReceiver
+    from .comfy.comms import LROSCSender, LRZMQSender, LRZMQReceiver
     NODE_CLASS_MAPPINGS["LR OSCSender"] = LROSCSender
     NODE_CLASS_MAPPINGS["LR ZMQSender"] = LRZMQSender
     NODE_CLASS_MAPPINGS["LR ZMQReceiver"] = LRZMQReceiver
@@ -28,25 +28,25 @@ except Exception as e:
     print(f"Lunar Ring Nodes: failed to import utils: {e}")
 
 try:
-    from .ip_webcam import LRIPWebcam
+    from .comfy.ip_webcam import LRIPWebcam
     NODE_CLASS_MAPPINGS["LR IPWebcam"] = LRIPWebcam
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import ip_webcam: {e}")
 
 try:
-    from .sound_reactive import LRSoundReactive
+    from .comfy.sound_reactive import LRSoundReactive
     NODE_CLASS_MAPPINGS["LR SoundReactive"] = LRSoundReactive
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import sound_reactive: {e}")
 
 try:
-    from .arduino_button import LRPushButtonArduino
+    from .comfy.arduino_button import LRPushButtonArduino
     NODE_CLASS_MAPPINGS["LR PushButtonArduino"] = LRPushButtonArduino
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import push_button: {e}")
 
 try:
-    from .drawing_canvas import LRDrawingCanvas
+    from .comfy.drawing_canvas import LRDrawingCanvas
     NODE_CLASS_MAPPINGS["LR DrawingCanvas"] = LRDrawingCanvas
 except Exception as e:
     print(f"Lunar Ring Nodes: failed to import drawing_canvas: {e}")
