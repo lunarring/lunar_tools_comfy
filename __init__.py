@@ -1,5 +1,5 @@
 NODE_CLASS_MAPPINGS = {}
-IMPORT_ERROR_MESSAGE = "!!!!! \n \n Lunar Ring Nodes: failed to import"
+IMPORT_ERROR_MESSAGE = "\n\n!!!!!Lunar Ring Nodes: failed to import"
 
 try:
     from .comfy.display_window import Renderer
@@ -67,15 +67,15 @@ except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
     
-# try:
-#     from .utils import ScaleVariable, NumberBuffer, DrawBufferImage,  EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable
-#     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = ScaleVariable
-#     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = NumberBuffer
-#     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
-#     NODE_CLASS_MAPPINGS["LR DerivativeVariable"] = DerivativeVariable
-#     # NODE_CLASS_MAPPINGS["LR RandomVariableGenerator"] = RandomVariableGenerator
-#     NODE_CLASS_MAPPINGS["LR DrawBufferImage"] = DrawBufferImage
-#     NODE_CLASS_MAPPINGS["LR EquationEvaluator"] = EquationEvaluator
-#     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
-# except Exception as e:
-#     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
+try:
+    from .comfy.utils import LRNumberBuffer, DrawBufferImage,  EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomVariableGenerator, LRScaleVariable
+    NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
+    NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
+    NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
+    NODE_CLASS_MAPPINGS["LR DerivativeVariable"] = DerivativeVariable
+    NODE_CLASS_MAPPINGS["LR RandomVariableGenerator"] = RandomVariableGenerator
+    NODE_CLASS_MAPPINGS["LR DrawBufferImage"] = DrawBufferImage
+    NODE_CLASS_MAPPINGS["LR EquationEvaluator"] = EquationEvaluator
+    NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
+except Exception as e:
+    print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
