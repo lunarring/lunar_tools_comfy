@@ -6,6 +6,12 @@ import lunar_tools as lt
 import re
 
 class LRScaleVariable:
+    DEFAULT_MIN_INPUT = 0.0
+    DEFAULT_MAX_INPUT = 1.0
+    DEFAULT_MIN_OUTPUT = 0.0
+    DEFAULT_MAX_OUTPUT = 1.0
+    DEFAULT_VARIABLE = 1.0
+
     def __init__(self):
         pass
 
@@ -20,10 +26,10 @@ class LRScaleVariable:
                 "variable": ("FLOAT", {"defaultInput": True}),
             },
             "optional": {
-                "min_input": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "max_input": ("FLOAT", {"default": 1.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "min_output": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "max_output": ("FLOAT", {"default": 1.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "min_input": ("FLOAT", {"default": cls.DEFAULT_MIN_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "max_input": ("FLOAT", {"default": cls.DEFAULT_MAX_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "min_output": ("FLOAT", {"default": cls.DEFAULT_MIN_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "max_output": ("FLOAT", {"default": cls.DEFAULT_MAX_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
             }
         }
 
@@ -33,7 +39,7 @@ class LRScaleVariable:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/util"
 
-    def scale(self, variable, min_input, max_input, min_output, max_output):
+    def scale(self, variable=None, min_input=None, max_input=None, min_output=None, max_output=None):
         """
         Scales the input variable from the input range [min_input, max_input] to the output range [min_output, max_output].
 
@@ -47,8 +53,17 @@ class LRScaleVariable:
         Returns:
         float: The scaled variable.
         """
+        if variable is None:
+            variable = self.DEFAULT_VARIABLE
+        if min_input is None:
+            min_input = self.DEFAULT_MIN_INPUT
+        if max_input is None:
+            max_input = self.DEFAULT_MAX_INPUT
+        if min_output is None:
+            min_output = self.DEFAULT_MIN_OUTPUT
+        if max_output is None:
+            max_output = self.DEFAULT_MAX_OUTPUT
         return (lt.scale_variable(variable, min_input, max_input, min_output, max_output),)
-
 
 
 class EquationEvaluator:
@@ -267,12 +282,18 @@ class DerivativeVariable:
         return (derivative,)
 
 
-class RandomVariableGenerator:
+class RandomUniformVariableGenerator:
+    DEFAULT_MIN_VALUE = 0.0
+    DEFAULT_MAX_VALUE = 1.0
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {},
-            "optional": {}
+            "optional": {
+                "min_value": ("FLOAT", {"default": cls.DEFAULT_MIN_VALUE, "min": -10000.0, "max": 10000.0, "step": 0.00001}),
+                "max_value": ("FLOAT", {"default": cls.DEFAULT_MAX_VALUE, "min": -10000.0, "max": 10000.0, "step": 0.00001}),
+            }
         }
     
     @classmethod 
@@ -285,10 +306,8 @@ class RandomVariableGenerator:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/util"
 
-    def generate(self):
-        # time.sleep(0.01)  # Wait for 10ms
-        random_variable = random.random()  # Generate a random float between 0 and 1
-        # print(f"Random variable generated: {random_variable}")
+    def generate(self, min_value=DEFAULT_MIN_VALUE, max_value=DEFAULT_MAX_VALUE):
+        random_variable = random.uniform(min_value, max_value)  # Generate a random float between min_value and max_value
         return (random_variable,)
 
 

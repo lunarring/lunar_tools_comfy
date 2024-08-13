@@ -1,5 +1,5 @@
 NODE_CLASS_MAPPINGS = {}
-IMPORT_ERROR_MESSAGE = "Lunar Ring Nodes: failed to import"
+IMPORT_ERROR_MESSAGE = "Lunar Ring Tools: failed to import"
 
 try:
     from .comfy.display_window import Renderer
@@ -68,12 +68,12 @@ except Exception as e:
 
     
 try:
-    from .comfy.utils import LRNumberBuffer, DrawBufferImage,  EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomVariableGenerator, LRScaleVariable
+    from .comfy.utils import LRNumberBuffer, DrawBufferImage,  EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeVariable"] = DerivativeVariable
-    NODE_CLASS_MAPPINGS["LR RandomVariableGenerator"] = RandomVariableGenerator
+    NODE_CLASS_MAPPINGS["LR RandomUniformVariableGenerator"] = RandomUniformVariableGenerator
     NODE_CLASS_MAPPINGS["LR DrawBufferImage"] = DrawBufferImage
     NODE_CLASS_MAPPINGS["LR EquationEvaluator"] = EquationEvaluator
     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
