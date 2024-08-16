@@ -1,8 +1,8 @@
 # import lunar_tools as lt
 import torch
 import numpy as np
-# import lunar_tools as lt
-from ..display_window import Renderer
+import lunar_tools as lt
+# from ..display_window import Renderer
 
 class LRRenderer:
     DEFAULT_HEIGHT = 576
@@ -47,7 +47,7 @@ class LRRenderer:
             return ()
         if self.renderer is None or height != self.render_size[0] or width != self.render_size[1]:
             self.render_size = (height, width)
-            self.renderer = Renderer(width=int(width), height=int(height), window_title=window_title, backend='pygame')
+            self.renderer = lt.Renderer(width=int(width), height=int(height), window_title=window_title)
         
         image = torch.from_numpy(image.copy())
         self.renderer.render(image)
