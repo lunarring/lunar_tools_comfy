@@ -2,8 +2,8 @@ NODE_CLASS_MAPPINGS = {}
 IMPORT_ERROR_MESSAGE = "Lunar Ring Tools: failed to import"
 
 try:
-    from .comfy.display_window import Renderer
-    NODE_CLASS_MAPPINGS["LR RenderWindow"] = Renderer
+    from .comfy.display_window import LRRenderer
+    NODE_CLASS_MAPPINGS["LR RenderWindow"] = LRRenderer
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} display_window: {e}")
 
