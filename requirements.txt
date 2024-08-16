@@ -1,1 +1,2 @@
+git+https://github.com/lunarring/lunar_tools
 pyfirmata
