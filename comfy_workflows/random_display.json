@@ -1,0 +1,198 @@
+{
+  "last_node_id": 64,
+  "last_link_id": 78,
+  "nodes": [
+    {
+      "id": 59,
+      "type": "LR DrawBufferImage",
+      "pos": [
+        633.8314306341099,
+        247.47076083629315
+      ],
+      "size": {
+        "0": 315,
+        "1": 178
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_value",
+          "type": "FLOAT",
+          "link": 78,
+          "widget": {
+            "name": "input_value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "buffer_image",
+          "type": "IMAGE",
+          "links": [
+            75
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR DrawBufferImage"
+      },
+      "widgets_values": [
+        0,
+        1000,
+        576,
+        false,
+        0,
+        1
+      ]
+    },
+    {
+      "id": 51,
+      "type": "LR RenderWindow",
+      "pos": [
+        1145,
+        95
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 75
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR RenderWindow"
+      },
+      "widgets_values": [
+        576,
+        1024,
+        "random_vals"
+      ]
+    },
+    {
+      "id": 63,
+      "type": "LR RandomUniformVariableGenerator",
+      "pos": [
+        -245,
+        258
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "random_variable",
+          "type": "FLOAT",
+          "links": [
+            77
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR RandomUniformVariableGenerator"
+      },
+      "widgets_values": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 64,
+      "type": "LR MovingWindowCalculator",
+      "pos": [
+        230,
+        279
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "variable",
+          "type": "FLOAT",
+          "link": 77,
+          "widget": {
+            "name": "variable"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "FLOAT",
+          "links": [
+            78
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR MovingWindowCalculator"
+      },
+      "widgets_values": [
+        0,
+        116,
+        "mean"
+      ]
+    }
+  ],
+  "links": [
+    [
+      75,
+      59,
+      0,
+      51,
+      0,
+      "IMAGE"
+    ],
+    [
+      77,
+      63,
+      0,
+      64,
+      0,
+      "FLOAT"
+    ],
+    [
+      78,
+      64,
+      0,
+      59,
+      0,
+      "FLOAT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9090909090909098,
+      "offset": [
+        419.96856936588955,
+        199.12923916370653
+      ]
+    }
+  },
+  "version": 0.4
+}
