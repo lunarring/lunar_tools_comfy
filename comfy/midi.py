@@ -1,4 +1,4 @@
-import lunar_tools as lt
+from ..midi import MidiInput
 
 class LRMidiInputAkaiLPD8:
     DEFAULT_BUTTON_NONTOGGLE = "pressed_once"
@@ -17,7 +17,7 @@ class LRMidiInputAkaiLPD8:
         return float("nan")
 
     def __init__(self):
-        self.akai_lpd8 = lt.MidiInput(device_name="akai_lpd8")
+        self.akai_lpd8 = MidiInput(device_name="akai_lpd8")
     
     @classmethod
     def INPUT_TYPES(cls):
@@ -84,7 +84,7 @@ class LRMidiInputAkaiMidimix:
         return float("nan")
 
     def __init__(self):
-        self.akai_midimix = lt.MidiInput(device_name="akai_midimix")
+        self.akai_midimix = MidiInput(device_name="akai_midimix")
     
     @classmethod
     def INPUT_TYPES(cls):
