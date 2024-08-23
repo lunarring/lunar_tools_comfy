@@ -10,6 +10,7 @@ git clone https://github.com/lunarring/lunar_tools_comfy
 ```
 Next, navigate into the lunar_tools_comfy folder and install the requirements.
 ```bash
+cd ComfyUI/custom_nodes
 pip install -r requirements.txt
 ```
 After restarting comfyUI, you should be able to see "Lunar Ring" after a rightclick/Add Node, or find the below nodes directly.
