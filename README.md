@@ -1,4 +1,4 @@
-# Lunar Tools ComfyUI
+# Lunar Tools ComfyUI [BETA]
 Lunar Tools is a comprehensive toolkit designed for real-time interactive AI installations. This repository contains 
 * wrappers for ComfyUI for existing Lunar Tools
 * special comfy utils that we find useful
