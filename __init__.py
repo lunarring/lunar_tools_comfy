@@ -79,3 +79,16 @@ try:
     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
+
+try:
+    from .comfy.movie import LRMovieReader, LRMovieSaver
+    NODE_CLASS_MAPPINGS["LR MovieReader"] = LRMovieReader
+    NODE_CLASS_MAPPINGS["LR MovieSaver"] = LRMovieSaver
+except Exception as e:
+    print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
+    
+# try:
+#     from .comfy.tmp_test import Teleport
+#     NODE_CLASS_MAPPINGS["LR Teleport"] = Teleport
+# except Exception as e:
+#     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
