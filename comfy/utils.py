@@ -387,6 +387,44 @@ class DrawBufferImage:
 
 
 
+class LRRecursiveAdd:
+    def __init__(self):
+        pass
+
+    @classmethod 
+    def IS_CHANGED(self):
+        return True    
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "variable": ("FLOAT", {"defaultInput": True}),
+                "variable_recursive": ("FLOAT", {"defaultInput": True}),
+            },
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    RETURN_NAMES = ("summed",)
+    FUNCTION = "add"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def add(self, variable=None, variable_recursive=None):
+        """
+        Adds two variables. One of them being recursive originating from looped link.
+
+        Returns:
+        float: Sum.
+        """
+        
+        if variable_recursive is None:
+            sum_result = variable
+        else:
+            sum_result = variable + variable_recursive
+        
+        return [sum_result]
+
 # # Add custom API routes, using router
 # from aiohttp import web
 # from server import PromptServer
