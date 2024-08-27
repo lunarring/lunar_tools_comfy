@@ -82,7 +82,7 @@ class LRJsonPromptReader:
     RETURN_NAMES = ("json_prompt_data", )
     FUNCTION = "read_json"
     OUTPUT_NODE = False
-    CATEGORY = "LunarRing/data"
+    CATEGORY = "LunarRing/prompt"
 
     def read_json(self, file_path):
         if self.json_data is None or self.file_path != file_path:
@@ -153,7 +153,7 @@ class LRJsonPromptScheduler:
     RETURN_NAMES = ("Current Prompt", )
     FUNCTION = "get_current_prompt"
     OUTPUT_NODE = True
-    CATEGORY = "LunarRing/data"
+    CATEGORY = "LunarRing/prompt"
 
     def get_current_prompt(self, json_prompt_data, interval, force_interval):
         # time.sleep(0.2)
@@ -216,6 +216,26 @@ class LRJsonPromptSchedulerBlended(LRJsonPromptScheduler):
     RETURN_NAMES = ("current_prompt", "next_prompt", "fract_progress")
     FUNCTION = "get_current_prompt"
     OUTPUT_NODE = True
-    CATEGORY = "LunarRing/data"
+    CATEGORY = "LunarRing/prompt"
 
 
+
+class LRMultiPrompt():
+    RETURN_TYPES = ("DICT",)
+    RETURN_NAMES = ("json_prompt_data", )
+    FUNCTION = "execute"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/prompt"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "string": ("STRING", {"default": "", "multiline": True})
+            }
+        }
+
+    def execute(self, string):
+        prompts = string.split('\n')
+        json_prompt_data = [{"prompt": prompt} for prompt in prompts if prompt.strip()]
+        return (json_prompt_data, )

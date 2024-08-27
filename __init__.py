@@ -60,12 +60,13 @@ except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} ghosting_generator: {e}")
     
 try:
-    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRJsonPromptSchedulerBlended
+    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRJsonPromptSchedulerBlended, LRMultiPrompt
     NODE_CLASS_MAPPINGS["LR GPT4Vision"] = LRGPT4Vision
     NODE_CLASS_MAPPINGS["LR Mic2Text"] = LRMic2Text
     NODE_CLASS_MAPPINGS["LR JsonPromptReader"] = LRJsonPromptReader
     NODE_CLASS_MAPPINGS["LR JsonPromptScheduler"] = LRJsonPromptScheduler
     NODE_CLASS_MAPPINGS["LR JsonPromptSchedulerBlended"] = LRJsonPromptSchedulerBlended
+    NODE_CLASS_MAPPINGS["LR MultiPrompt"] = LRMultiPrompt
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
