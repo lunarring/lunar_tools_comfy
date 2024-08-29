@@ -14,9 +14,8 @@ class LRIPWebcam:
             }
             
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, ip_address):
         return True
-                
     RETURN_TYPES = ("IMAGE", )  
     RETURN_NAMES = ("IP Webcam Image", )
     FUNCTION = "get_img"

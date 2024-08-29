@@ -134,9 +134,8 @@ class LRJsonPromptScheduler:
         self.return_blended = False
     
     @classmethod 
-    def IS_CHANGED(cls):
+    def IS_CHANGED(cls, json_prompt_data, interval, force_interval):
         return True
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -144,7 +143,7 @@ class LRJsonPromptScheduler:
                 "json_prompt_data": ("DICT", {"defaultInput": True})
             },
             "optional": {
-                "interval": ("FLOAT", {"default": 2.0, "min": 0.1}),
+                "interval": ("FLOAT", {"default": 2.0, "min": 0.1, "step": 0.1}),
                 "force_interval": ("BOOLEAN", {"default": False})
             }
         }
@@ -239,3 +238,47 @@ class LRMultiPrompt():
         prompts = string.split('\n')
         json_prompt_data = [{"prompt": prompt} for prompt in prompts if prompt.strip()]
         return (json_prompt_data, )
+
+
+class LRConcatStrings:
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("concatenated_string",)
+    FUNCTION = "concatenate"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/prompt"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "string1": ("STRING", {"default": "", "multiline": False, "defaultInput": True}),
+                "string2": ("STRING", {"default": "", "multiline": False, "defaultInput": True})
+            }
+        }
+
+    def concatenate(self, string1, string2):
+        return (f"{string1} / {string2}",)
+
+class LRDelayText:
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("delayed_string",)
+    FUNCTION = "delay"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/prompt"
+
+    def __init__(self):
+        self.first_call = "first"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "input_recursive": ("STRING", {"default": "", "multiline": False, "defaultInput": True})
+            }
+        }
+
+    def delay(self, input_recursive=None):
+        if input_recursive is None:
+            return (self.first_call,)
+        else:
+            return (input_recursive,)

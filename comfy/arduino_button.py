@@ -18,7 +18,7 @@ class LRPushButtonArduino:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/sources"
 
-    def get_button_press(self, dummy):
+    def get_button_press(self):
         button_state1, button_state2 = self.push_button_ctrl.button_get()
         
         # print(f'button_state2 {button_state2}')

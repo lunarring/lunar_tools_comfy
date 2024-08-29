@@ -1,6 +1,10 @@
 NODE_CLASS_MAPPINGS = {}
 IMPORT_ERROR_MESSAGE = "Lunar Ring Tools: failed to import"
 
+from .comfy.flow_control import ExecutionBlockerNode
+NODE_CLASS_MAPPINGS["LR ExecutionBlockerNode"] = ExecutionBlockerNode
+
+
 try:
     from .comfy.display_window import LRRenderer
     NODE_CLASS_MAPPINGS["LR RenderWindow"] = LRRenderer
@@ -67,6 +71,14 @@ try:
     NODE_CLASS_MAPPINGS["LR JsonPromptScheduler"] = LRJsonPromptScheduler
     NODE_CLASS_MAPPINGS["LR JsonPromptSchedulerBlended"] = LRJsonPromptSchedulerBlended
     NODE_CLASS_MAPPINGS["LR MultiPrompt"] = LRMultiPrompt
+except Exception as e:
+    print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
+
+# experimental
+try:
+    from .comfy.prompt_tools import LRConcatStrings, LRDelayText
+    NODE_CLASS_MAPPINGS["LR ConcatStrings"] = LRConcatStrings
+    NODE_CLASS_MAPPINGS["LR DelayText"] = LRDelayText
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 

@@ -11,7 +11,6 @@ class LRSoundReactive:
     @classmethod 
     def IS_CHANGED(self):
         return float("nan")
-            
     RETURN_TYPES = ("FLOAT", )  
     RETURN_NAMES = ("Sound level", )
     FUNCTION = "get_sound_level"

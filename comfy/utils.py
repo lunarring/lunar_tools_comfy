@@ -16,9 +16,8 @@ class LRScaleVariable:
         pass
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, variable, min_input, max_input, min_output, max_output):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -71,9 +70,8 @@ class EquationEvaluator:
         pass
 
     @classmethod
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, a, b, c, d, equation):
         return True
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -120,9 +118,8 @@ class MovingWindowCalculator:
         self.buffer = lt.SimpleNumberBuffer(buffer_size=self.window_size)
 
     @classmethod
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, variable, window_size, metric):
         return True
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -178,9 +175,8 @@ class LRNumberBuffer:
         self.number_buffer = lt.SimpleNumberBuffer(self.DEFAULT_BUFFER_SIZE)
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, variable, buffer_size, normalize):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -216,9 +212,8 @@ class DerivativeBuffer:
         self.buffer = None
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, buffer, absolute_value):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -252,9 +247,8 @@ class DerivativeVariable:
         self.last_value = None
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, variable, absolute_value):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -297,7 +291,7 @@ class RandomUniformVariableGenerator:
         }
     
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, min_value, max_value):
         return float("nan")
     
     RETURN_TYPES = ("FLOAT",)
@@ -320,9 +314,8 @@ class DrawBufferImage:
         self.simple_number_buffer = []
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, input_value, buffer_size, height, use_fixed_min_max, fixed_min, fixed_max):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -331,7 +324,7 @@ class DrawBufferImage:
                 "buffer_size": ("FLOAT", {"default": cls.DEFAULT_WIDTH, "min": 1.0, "max": 1000.0, "step": 1.0}),
             },
             "optional": {
-                "height": ("INT", {"default": cls.DEFAULT_HEIGHT, "min": 50, "max": 1000, "step": 1}),
+                "height": ("INT", {"default": cls.DEFAULT_HEIGHT, "min": 5, "max": 1000, "step": 1}),
                 "use_fixed_min_max": ("BOOLEAN", {"default": False}),
                 "fixed_min": ("FLOAT", {"default": 0.0, "step": 0.0001}),
                 "fixed_max": ("FLOAT", {"default": 1.0, "step": 0.0001}),
@@ -392,9 +385,8 @@ class LRRecursiveAdd:
         pass
 
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, variable, variable_recursive):
         return True    
-
     @classmethod
     def INPUT_TYPES(cls):
         return {

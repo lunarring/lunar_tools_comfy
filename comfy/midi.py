@@ -12,10 +12,9 @@ class LRMidiInputAkaiLPD8:
     CATEGORY = "LunarRing/sources"
     
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, A0_toggle, A1_toggle, B0_toggle, B1_toggle, C0_toggle, C1_toggle, D0_toggle, D1_toggle):
         """Run every time"""
         return float("nan")
-
     def __init__(self):
         self.akai_lpd8 = MidiInput(device_name="akai_lpd8")
     
@@ -79,10 +78,10 @@ class LRMidiInputAkaiMidimix:
     
     
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, A3_toggle, A4_toggle, B3_toggle, B4_toggle, C3_toggle, C4_toggle, D3_toggle, D4_toggle, 
+                   E3_toggle, E4_toggle, F3_toggle, F4_toggle, G3_toggle, G4_toggle, H3_toggle, H4_toggle):
         """Run every time"""
         return float("nan")
-
     def __init__(self):
         self.akai_midimix = MidiInput(device_name="akai_midimix")
     

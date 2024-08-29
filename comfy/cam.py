@@ -12,7 +12,7 @@ class LRWebCam:
     CATEGORY = "LunarRing/sources"
     
     @classmethod 
-    def IS_CHANGED(self):
+    def IS_CHANGED(self, cam_id, height, width):
         """Run every time"""
         return True
     
