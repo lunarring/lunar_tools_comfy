@@ -44,17 +44,14 @@ class LRRenderer:
 
     def render(self, image=None, height=DEFAULT_HEIGHT, width=DEFAULT_WIDTH, window_title=DEFAULT_WINDOW_TITLE):
         image = np.asarray(image)
-        print(np.sum(image))
-        print(image[:,:,1])
-        print(np.random.rand())
-        # if image is None:
-        #     return ()
-        # if self.renderer is None or height != self.render_size[0] or width != self.render_size[1]:
-        #     self.render_size = (height, width)
-        #     self.renderer = lt.Renderer(width=int(width), height=int(height), window_title=window_title)
+        if image is None:
+            return ()
+        if self.renderer is None or height != self.render_size[0] or width != self.render_size[1]:
+            self.render_size = (height, width)
+            self.renderer = lt.Renderer(width=int(width), height=int(height), window_title=window_title)
         
-        # image = torch.from_numpy(image.copy())
-        # self.renderer.render(image)
+        image = torch.from_numpy(image.copy())
+        self.renderer.render(image)
         return ()
 
 
