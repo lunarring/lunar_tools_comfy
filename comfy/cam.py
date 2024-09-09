@@ -14,7 +14,7 @@ class LRWebCam:
     @classmethod 
     def IS_CHANGED(self, cam_id, height, width):
         """Run every time"""
-        return True
+        return float("nan")
     
     def __init__(self):
         self.parameters = ["height", "width", "cam_id"]
