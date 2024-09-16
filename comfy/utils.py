@@ -417,6 +417,42 @@ class LRRecursiveAdd:
         
         return [sum_result]
 
+class LRDelayString:
+    def __init__(self):
+        self.init_val = "INIT"
+
+    @classmethod 
+    def IS_CHANGED(self, input_string):
+        return True
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "input_recursive": ("STRING", {"defaultInput": True}),
+            },
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("delayed_string",)
+    FUNCTION = "delay"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def delay(self, input_recursive=None):
+        """
+        Delays the input string by returning it as is.
+
+        Returns:
+        str: The input string.
+        """
+        if input_recursive is None:
+            output = self.init_val
+        else:
+            output = input_recursive
+        return [output]
+
+
 # # Add custom API routes, using router
 # from aiohttp import web
 # from server import PromptServer
