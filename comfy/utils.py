@@ -109,6 +109,7 @@ class EquationEvaluator:
 
         return (float(result),)
 
+
 class MovingWindowCalculator:
     DEFAULT_WINDOW_SIZE = 10
     DEFAULT_METRIC = 'mean'
@@ -118,15 +119,16 @@ class MovingWindowCalculator:
         self.buffer = lt.SimpleNumberBuffer(buffer_size=self.window_size)
 
     @classmethod
-    def IS_CHANGED(self, variable, window_size, metric):
+    def IS_CHANGED(self):
         return True
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
                 "variable": ("FLOAT", {"defaultInput": True}),
                 "window_size": ("FLOAT", {"default": cls.DEFAULT_WINDOW_SIZE, "min": 1.0, "max": 1000.0, "step": 1.0}),
-                "metric": (["mean", "max", "min", "median", "std"],),
+                "metric": (["mean", "max", "min", "median", "std", "last_nonzero"],),
             }
         }
 
@@ -162,10 +164,14 @@ class MovingWindowCalculator:
             result = np.median(buffer_array)
         elif metric == "std":
             result = np.std(buffer_array)
+        elif metric == "last_nonzero":
+            nonzero_indices = np.nonzero(buffer_array)[0]
+            result = buffer_array[nonzero_indices[-1]] if nonzero_indices.size > 0 else 0
         else:
-            raise ValueError(f"Invalid metric: {metric}. Only 'mean', 'max', 'min', 'median', 'std' are allowed.")
+            raise ValueError(f"Invalid metric: {metric}. Only 'mean', 'max', 'min', 'median', 'std', 'last_nonzero' are allowed.")
         
         return (result,)
+
 
 
 class LRNumberBuffer:
@@ -359,6 +365,8 @@ class DrawBufferImage:
             min_val, max_val = np.min(values), np.max(values)
 
         def normalize(values, min_val, max_val):
+            if isinstance(values, list):
+                values = np.array(values)
             if max_val - min_val == 0:
                 return np.full(len(values), self.shape_hw_vis[0] // 2)
             else:
