@@ -1,9 +1,6 @@
 NODE_CLASS_MAPPINGS = {}
 IMPORT_ERROR_MESSAGE = "Lunar Ring Tools: failed to import"
 
-from .comfy.flow_control import ExecutionBlockerNode
-NODE_CLASS_MAPPINGS["LR ExecutionBlockerNode"] = ExecutionBlockerNode
-
 
 try:
     from .comfy.display_window import LRRenderer
@@ -64,27 +61,27 @@ except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} ghosting_generator: {e}")
     
 try:
-    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRJsonPromptSchedulerBlended, LRMultiPrompt
+    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRMultiPrompt, LRRandomPromptTimed, LRRandomPromptTimedMulti
     NODE_CLASS_MAPPINGS["LR GPT4Vision"] = LRGPT4Vision
     NODE_CLASS_MAPPINGS["LR Mic2Text"] = LRMic2Text
     NODE_CLASS_MAPPINGS["LR JsonPromptReader"] = LRJsonPromptReader
     NODE_CLASS_MAPPINGS["LR JsonPromptScheduler"] = LRJsonPromptScheduler
-    NODE_CLASS_MAPPINGS["LR JsonPromptSchedulerBlended"] = LRJsonPromptSchedulerBlended
     NODE_CLASS_MAPPINGS["LR MultiPrompt"] = LRMultiPrompt
+    NODE_CLASS_MAPPINGS["LR RandomPromptTimed"] = LRRandomPromptTimed
+    NODE_CLASS_MAPPINGS["LR LRRandomPromptTimedMulti"] = LRRandomPromptTimedMulti
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
 # experimental
 try:
-    from .comfy.prompt_tools import LRConcatStrings, LRDelayText
+    from .comfy.prompt_tools import LRConcatStrings
     NODE_CLASS_MAPPINGS["LR ConcatStrings"] = LRConcatStrings
-    NODE_CLASS_MAPPINGS["LR DelayText"] = LRDelayText
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
     
 try:
-    from .comfy.utils import LRNumberBuffer, DrawBufferImage,  EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd
+    from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
@@ -94,6 +91,7 @@ try:
     NODE_CLASS_MAPPINGS["LR EquationEvaluator"] = EquationEvaluator
     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
     NODE_CLASS_MAPPINGS["LR RecursiveAdd"] = LRRecursiveAdd
+    NODE_CLASS_MAPPINGS["LR DelayString"] = LRDelayString
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 
