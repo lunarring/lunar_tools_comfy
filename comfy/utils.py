@@ -4,6 +4,7 @@ import time
 import numpy as np
 import lunar_tools as lt
 import re
+import datetime
 
 class LRScaleVariable:
     DEFAULT_MIN_INPUT = 0.0
@@ -460,6 +461,55 @@ class LRDelayString:
             output = input_recursive
         return [output]
 
+
+class LRSaveToFile:
+    def __init__(self):
+        self.file_path = None
+        self.last_input = None  # Store the last input data
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "data_for_saving": ("*", {"defaultInput": True}),
+                "file_name": ("STRING"),
+            },
+        }
+
+    RETURN_TYPES = ()
+    RETURN_NAMES = ()
+    FUNCTION = "save_to_file"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/util"
+
+    def save_to_file(self, data_for_saving, file_name):
+        """
+        Saves the input data to a file with a timestamp only if it's different from the last input.
+
+        Args:
+            data_for_saving (str): The data to be saved.
+            file_name (str): The name of the file to save the data in.
+
+        Returns:
+            None
+        """
+        if not isinstance(data_for_saving, (str, int, float)):
+            raise ValueError("data_for_saving must be a string or a number.")
+        
+        if isinstance(data_for_saving, float):
+            data_for_saving = str(data_for_saving)
+
+        # Check if the current input is different from the last input
+        if data_for_saving != self.last_input:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+            print(f"Saving data to {file_name} at {timestamp}")
+            with open(file_name, 'a') as f:
+                f.write(f"{timestamp} {data_for_saving}\n")
+            # Update the last input
+            self.last_input = data_for_saving
+        else:
+            print("Input data is the same as the last input. Skipping save.")
+        return []
 
 # # Add custom API routes, using router
 # from aiohttp import web

@@ -81,7 +81,7 @@ except Exception as e:
 
     
 try:
-    from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd
+    from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd, LRSaveToFile
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
@@ -92,6 +92,7 @@ try:
     NODE_CLASS_MAPPINGS["LR MovingWindowCalculator"] = MovingWindowCalculator
     NODE_CLASS_MAPPINGS["LR RecursiveAdd"] = LRRecursiveAdd
     NODE_CLASS_MAPPINGS["LR DelayString"] = LRDelayString
+    NODE_CLASS_MAPPINGS["LR SaveToFile"] = LRSaveToFile
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 
