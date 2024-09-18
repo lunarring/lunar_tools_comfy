@@ -13,8 +13,9 @@ class LRMovieReader:
             }
             
     @classmethod 
-    def IS_CHANGED(cls, file_path):
-        return True
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
     RETURN_TYPES = ("IMAGE", )  
     RETURN_NAMES = ("Image Next Frame", )
     FUNCTION = "get_next_frame"
@@ -52,9 +53,10 @@ class LRMovieSaver:
             }
         }
 
-    @classmethod
-    def IS_CHANGED(cls, image, file_path, finalize, fps, crf, codec, preset, pix_fmt, silent_ffmpeg):
-        return True
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
     RETURN_TYPES = ()
     RETURN_NAMES = ()
     FUNCTION = "process_frame"

@@ -17,8 +17,9 @@ class LRScaleVariable:
         pass
 
     @classmethod 
-    def IS_CHANGED(self, variable, min_input, max_input, min_output, max_output):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -70,9 +71,10 @@ class EquationEvaluator:
     def __init__(self):
         pass
 
-    @classmethod
-    def IS_CHANGED(self, a, b, c, d, equation):
-        return True
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -119,9 +121,9 @@ class MovingWindowCalculator:
         self.window_size = self.DEFAULT_WINDOW_SIZE
         self.buffer = lt.SimpleNumberBuffer(buffer_size=self.window_size)
 
-    @classmethod
-    def IS_CHANGED(self):
-        return True
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -182,8 +184,9 @@ class LRNumberBuffer:
         self.number_buffer = lt.SimpleNumberBuffer(self.DEFAULT_BUFFER_SIZE)
 
     @classmethod 
-    def IS_CHANGED(self, variable, buffer_size, normalize):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -219,8 +222,9 @@ class DerivativeBuffer:
         self.buffer = None
 
     @classmethod 
-    def IS_CHANGED(self, buffer, absolute_value):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -254,8 +258,9 @@ class DerivativeVariable:
         self.last_value = None
 
     @classmethod 
-    def IS_CHANGED(self, variable, absolute_value):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -298,8 +303,8 @@ class RandomUniformVariableGenerator:
         }
     
     @classmethod 
-    def IS_CHANGED(self, min_value, max_value):
-        return float("nan")
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
     
     RETURN_TYPES = ("FLOAT",)
     RETURN_NAMES = ("random_variable",)
@@ -321,8 +326,9 @@ class DrawBufferImage:
         self.simple_number_buffer = []
 
     @classmethod 
-    def IS_CHANGED(self, input_value, buffer_size, height, use_fixed_min_max, fixed_min, fixed_max):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")   
+    
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -394,8 +400,9 @@ class LRRecursiveAdd:
         pass
 
     @classmethod 
-    def IS_CHANGED(self, variable, variable_recursive):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+     
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -431,8 +438,8 @@ class LRDelayString:
         self.init_val = "INIT"
 
     @classmethod 
-    def IS_CHANGED(self, input_string):
-        return True
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
 
     @classmethod
     def INPUT_TYPES(cls):

@@ -28,8 +28,8 @@ class LROSCSender:
     CATEGORY = "LunarRing/comms"
 
     @classmethod 
-    def IS_CHANGED(self, ip_address, name, value, port):
-        return True   
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
     
     def __init__(self):
         self.sender = None
@@ -66,8 +66,9 @@ class LRZMQSender:
     CATEGORY = "LunarRing/comms"
 
     @classmethod 
-    def IS_CHANGED(cls, ip_address, image, port):
-        return True   
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
     def __init__(self):
         self.server = None
 
@@ -104,8 +105,9 @@ class LRZMQReceiver:
     CATEGORY = "LunarRing/comms"
 
     @classmethod 
-    def IS_CHANGED(cls, ip_address, port):
-        return True   
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
     def __init__(self):
         self.server = None
 

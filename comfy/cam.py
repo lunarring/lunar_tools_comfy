@@ -12,9 +12,8 @@ class LRWebCam:
     CATEGORY = "LunarRing/sources"
     
     @classmethod 
-    def IS_CHANGED(self, cam_id, height, width):
-        """Run every time"""
-        return float("nan")
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
     
     def __init__(self):
         self.parameters = ["height", "width", "cam_id"]

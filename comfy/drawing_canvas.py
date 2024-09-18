@@ -87,8 +87,8 @@ class LRDrawingCanvas:
         }
     
     @classmethod 
-    def IS_CHANGED(self, height, width, gpu_id, x, y, color_angle, mask_radius, drawing_intensity, decay_rate):
-        return True    
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
     
     RETURN_TYPES = ("IMAGE", )  
     RETURN_NAMES = ("Canvas Image", )

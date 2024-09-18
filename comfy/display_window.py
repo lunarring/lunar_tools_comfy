@@ -19,6 +19,10 @@ class LRRenderer:
         self.renderer = None
         self.render_size = None
         self.last_exec_time = time.time()
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
     
     @classmethod
     def INPUT_TYPES(s):
