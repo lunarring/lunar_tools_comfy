@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import lunar_tools as lt
 import time
+import PIL
 # from ..display_window import Renderer
 class LRRenderer:
     DEFAULT_HEIGHT = 576
@@ -54,15 +55,26 @@ class LRRenderer:
         if cap_fps:
             sleep_time = max(0, (1.0 / self.MAX_FPS) - elapsed_time)
             time.sleep(sleep_time)
-        
-        image = np.asarray(image)
+
         if image is None:
             return ()
+        
+        if isinstance(image, PIL.Image.Image):
+            image = np.asarray(image)
+            image = torch.from_numpy(image.copy())
+        elif isinstance(image, np.ndarray):
+            image = torch.from_numpy(image.copy())
+        elif torch.is_tensor(image):
+            if torch.max(image) <= 1:
+                image = image * 255
+            image = image.to(torch.uint8)
+            image = image.squeeze(0)
+
         if self.renderer is None or height != self.render_size[0] or width != self.render_size[1]:
             self.render_size = (height, width)
             self.renderer = lt.Renderer(width=int(width), height=int(height), window_title=window_title)
         
-        image = torch.from_numpy(image.copy())
+        
         self.renderer.render(image)
         
         self.last_exec_time = time.time()
