@@ -6,7 +6,7 @@ import lunar_tools as lt
 import re
 
 
-class LROSCSender:
+class LROSCSenderOLD:
     DEFAULT_PORT = 8003
 
     @classmethod
@@ -44,6 +44,77 @@ class LROSCSender:
         except Exception as e:
             import pdb; pdb.set_trace()
         return ()
+
+class LROSCSender:
+    DEFAULT_PORT = 8003
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "ip_address": ("STRING", {"default": "127.0.0.1"}),
+            },
+            "optional": {
+                "port": ("INT", {"default": LROSCSender.DEFAULT_PORT}),
+            }
+        }
+
+    RETURN_TYPES = ("OSCSender", )  
+    RETURN_NAMES = ("osc_sender", )  
+    FUNCTION = "init_osc_sender"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/comms"
+
+    def __init__(self):
+        self.ip_address = None
+        self.port = None
+
+    def init_osc_sender(self, ip_address, port=DEFAULT_PORT):
+        try:
+            if self.ip_address != ip_address or self.port != port:
+                sender = lt.OSCSender(ip_receiver=ip_address, port_receiver=port)
+                self.port = port
+                self.ip_address = ip_address
+                
+        except Exception as e:
+            import pdb; pdb.set_trace()
+        return ([sender])
+
+class LROSCSendMessage:
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "osc_sender": ("OSCSender", {}),
+                "name": ("STRING", {"default": "/example"}),
+                "value": ("FLOAT", {"default": 0.0}),
+            }
+        }
+
+    RETURN_TYPES = ()  
+    FUNCTION = "send_osc_message"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/comms"
+
+    def __init__(self):
+        pass
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
+    def send_osc_message(self, osc_sender, name, value):
+        if osc_sender is None:
+            return ()
+        try:
+            # print(f"LROSCSendMessage: Sending message '{name}' with value {value}")
+            osc_sender.send_message(name, float(value))
+        except Exception as e:
+            import pdb; pdb.set_trace()
+        return ()
+
+
 
 class LRZMQSender:
     DEFAULT_PORT = 5556

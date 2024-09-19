@@ -22,8 +22,9 @@ except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} midi: {e}")
 
 try:
-    from .comfy.comms import LROSCSender, LRZMQSender, LRZMQReceiver
+    from .comfy.comms import LROSCSender, LRZMQSender, LRZMQReceiver, LROSCSendMessage
     NODE_CLASS_MAPPINGS["LR OSCSender"] = LROSCSender
+    NODE_CLASS_MAPPINGS["LR OSCSendMessage"] = LROSCSendMessage
     NODE_CLASS_MAPPINGS["LR ZMQSender"] = LRZMQSender
     NODE_CLASS_MAPPINGS["LR ZMQReceiver"] = LRZMQReceiver
     # NODE_CLASS_MAPPINGS["LR OSCReceiver"] = LROSCReceiver
