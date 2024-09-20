@@ -80,10 +80,12 @@ class EquationEvaluator:
         return {
             "required": {
                 "a": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
+                "equation": ("STRING", {"multiline": False, "default": "a + 2*b"}),
+            },
+            "optional": {
                 "b": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
                 "c": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
                 "d": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
-                "equation": ("STRING", {"multiline": False, "default": "a + 2*b"}),
             }
         }
 
