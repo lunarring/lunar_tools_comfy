@@ -5,46 +5,6 @@ import numpy as np
 import lunar_tools as lt
 import re
 
-
-class LROSCSenderOLD:
-    DEFAULT_PORT = 8003
-
-    @classmethod
-    def INPUT_TYPES(s):
-        return {
-            "required": {
-                "ip_address": ("STRING", {"default": "127.0.0.1"}),
-                "name": ("STRING", {"default": "/test"}),
-            },
-            "optional": {
-                "value": ("FLOAT", {"defaultInput": True}),
-                "port": ("INT", {"default": LROSCSender.DEFAULT_PORT}),
-            }
-        }
-
-    RETURN_TYPES = ()
-    FUNCTION = "send_osc"
-    OUTPUT_NODE = True
-    CATEGORY = "LunarRing/comms"
-
-    @classmethod 
-    def IS_CHANGED(cls, **inputs):
-        return float("NaN")
-    
-    def __init__(self):
-        self.sender = None
-
-    def send_osc(self, ip_address, name, value=None, port=DEFAULT_PORT):
-        if value is None:
-            return ()
-        try:
-            if self.sender is None or self.sender.ip_receiver != ip_address or self.sender.port_receiver != port:
-                self.sender = lt.OSCSender(ip_receiver=ip_address, port_receiver=port)
-            self.sender.send_message(name, float(value))
-        except Exception as e:
-            import pdb; pdb.set_trace()
-        return ()
-
 class LROSCSender:
     DEFAULT_PORT = 8003
 
