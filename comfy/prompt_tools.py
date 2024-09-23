@@ -158,7 +158,7 @@ class LRJsonPromptScheduler:
 
     def get_current_prompt(self, json_prompt_data, interval, force_interval):
         # time.sleep(0.2)
-        if self.json_data is None or self.json_data != json_prompt_data:
+        if self.json_data is None or self.json_data != json_prompt_data and len(json_prompt_data)>0:
             self.json_data = json_prompt_data
             self.current_index = 0
             self.last_update_time = time.time()
