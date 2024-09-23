@@ -319,6 +319,51 @@ class RandomUniformVariableGenerator:
         return (random_variable,)
 
 
+class CycleVariableGenerator:
+    DEFAULT_MIN_VALUE = 0.0
+    DEFAULT_MAX_VALUE = 1.0
+    DEFAULT_STEP = 0.1
+
+    def __init__(self):
+        self.current_value = self.DEFAULT_MIN_VALUE
+        self.direction = 1  # 1 for increasing, -1 for decreasing
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "min_value": ("FLOAT", {"default": cls.DEFAULT_MIN_VALUE, "min": -10000.0, "max": 10000.0, "step": 0.00001}),
+                "max_value": ("FLOAT", {"default": cls.DEFAULT_MAX_VALUE, "min": -10000.0, "max": 10000.0, "step": 0.00001}),
+                "step": ("FLOAT", {"default": cls.DEFAULT_STEP, "min": 0.00001, "max": 10000.0, "step": 0.00001}),
+            }
+        }
+    
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
+    RETURN_TYPES = ("FLOAT",)
+    RETURN_NAMES = ("cycled_variable",)
+    FUNCTION = "generate"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def generate(self, min_value=DEFAULT_MIN_VALUE, max_value=DEFAULT_MAX_VALUE, step=DEFAULT_STEP):
+        if self.direction == 1:
+            self.current_value += step
+            if self.current_value >= max_value:
+                self.current_value = max_value
+                self.direction = -1
+        else:
+            self.current_value -= step
+            if self.current_value <= min_value:
+                self.current_value = min_value
+                self.direction = 1
+
+        return (self.current_value,)
+
+
+
 class DrawBufferImage:
     DEFAULT_HEIGHT = 200
     DEFAULT_WIDTH = 300
@@ -480,7 +525,7 @@ class LRSaveToFile:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "data_for_saving": ("*", {"defaultInput": True}),
+                "data_for_saving": ("FLOAT", {"defaultInput": True}),
                 "file_name": ("STRING"),
             },
         }
@@ -510,8 +555,8 @@ class LRSaveToFile:
 
         # Check if the current input is different from the last input
         if data_for_saving != self.last_input:
-            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-            print(f"Saving data to {file_name} at {timestamp}")
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+            # print(f"Saving data to {file_name} at {timestamp}")
             with open(file_name, 'a') as f:
                 f.write(f"{timestamp} {data_for_saving}\n")
             # Update the last input
