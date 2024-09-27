@@ -1,0 +1,201 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "LR MovingWindowCalculator",
+      "pos": {
+        "0": 674,
+        "1": 2825
+      },
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "variable",
+          "type": "FLOAT",
+          "link": 3,
+          "widget": {
+            "name": "variable"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "FLOAT",
+          "links": [
+            4
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR MovingWindowCalculator"
+      },
+      "widgets_values": [
+        0,
+        10,
+        "mean"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LR RandomUniformVariableGenerator",
+      "pos": {
+        "0": 168,
+        "1": 2841
+      },
+      "size": {
+        "0": 415.8000183105469,
+        "1": 82
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "random_variable",
+          "type": "FLOAT",
+          "links": [
+            3
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR RandomUniformVariableGenerator"
+      },
+      "widgets_values": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LR DrawBufferImage",
+      "pos": {
+        "0": 1089,
+        "1": 2815
+      },
+      "size": [
+        315,
+        178
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_value",
+          "type": "FLOAT",
+          "link": 4,
+          "widget": {
+            "name": "input_value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "buffer_image",
+          "type": "IMAGE",
+          "links": [
+            2
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LR DrawBufferImage"
+      },
+      "widgets_values": [
+        0,
+        300,
+        200,
+        false,
+        0,
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LR RenderWindow",
+      "pos": {
+        "0": 1551,
+        "1": 2817
+      },
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "LR RenderWindow"
+      },
+      "widgets_values": [
+        576,
+        1024,
+        "lunar_render_window",
+        true
+      ]
+    }
+  ],
+  "links": [
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      1,
+      0,
+      4,
+      0,
+      "FLOAT"
+    ],
+    [
+      4,
+      4,
+      0,
+      2,
+      0,
+      "FLOAT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6727499949325758,
+      "offset": [
+        84.70333853622435,
+        -2493.527514150494
+      ]
+    }
+  },
+  "version": 0.4
+}
