@@ -24,7 +24,7 @@ class LRWebCam:
         self.cam = None
         self.autofocus = self.DEFAULT_AUTOFOCUS
         self.manualfocusval = self.DEFAULT_MANUALFOCUSVAL
-        self.cam_focus = self.DEFAULT_MANUALFOCUSVAL
+        self.manual_focus_val = self.DEFAULT_MANUALFOCUSVAL
     
     def initialize_once(self, cam_id, height, width):
         if self.cam is None or self.height != int(height) or self.width != int(width):
@@ -38,17 +38,17 @@ class LRWebCam:
             self.cam.cam.set(cv2.CAP_PROP_AUTOFOCUS, 1 if self.DEFAULT_AUTOFOCUS else 0)
             self.cam.cam.set(cv2.CAP_PROP_FOCUS, self.DEFAULT_MANUALFOCUSVAL)
             
-    def update_params(self, autofocus, cam_focus):
+    def update_params(self, autofocus, manual_focus_val):
         if self.autofocus != autofocus:
             self.autofocus = autofocus
             self.cam.cam.set(cv2.CAP_PROP_AUTOFOCUS, 1 if self.autofocus else 0)
-        if self.cam_focus != cam_focus:
-            self.cam_focus = cam_focus
-            self.cam.cam.set(cv2.CAP_PROP_FOCUS, self.cam_focus)
+        if self.manual_focus_val != manual_focus_val:
+            self.manual_focus_val = manual_focus_val
+            self.cam.cam.set(cv2.CAP_PROP_FOCUS, self.manual_focus_val)
 
-    def get_img(self, cam_id, height, width, autofocus, cam_focus):
+    def get_img(self, cam_id, height, width, autofocus, manual_focus_val):
         self.initialize_once(cam_id, height, width)
-        self.update_params(autofocus, cam_focus)
+        self.update_params(autofocus, manual_focus_val)
         
         img = self.cam.get_img()
         img = [img]
@@ -82,7 +82,7 @@ class LRWebCam:
                 "autofocus": ("BOOLEAN", {
                     "default": True,
                 }),
-                "manual focus value": ("FLOAT", {
+                "manual_focus_val": ("FLOAT", {
                     "default": 0,
                     "min": 0,
                     "max": 255,
