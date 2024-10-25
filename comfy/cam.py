@@ -27,7 +27,9 @@ class LRWebCam:
         self.cam_focus = self.DEFAULT_MANUALFOCUSVAL
     
     def initialize_once(self, cam_id, height, width):
-        if self.cam is None:
+        if self.cam is None or self.height != int(height) or self.width != int(width):
+            if self.cam is not None:
+                self.cam.cam.release()
             self.cam_id = cam_id
             self.height = int(height)
             self.width = int(width)
