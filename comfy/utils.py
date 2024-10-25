@@ -526,7 +526,7 @@ class LRSaveToFile:
         return {
             "required": {
                 "data_for_saving": ("FLOAT", {"defaultInput": True}),
-                "file_name": ("STRING"),
+                "file_name": ("STRING", {"defaultInput": False}),
             },
         }
 
