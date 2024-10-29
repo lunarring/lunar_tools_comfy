@@ -67,9 +67,19 @@ class LRRenderer:
             image = np.asarray(image)
             image = torch.from_numpy(image.copy())
         elif isinstance(image, np.ndarray):
+            if image.ndim == 2:
+                image = np.stack((image,) * 3, axis=-1)
+            if image.max() <= 1.0:
+                image = image * 255
+            if image.ndim == 2:
+                image = np.stack((image,) * 3, axis=-1)
             image = torch.from_numpy(image.copy())
         elif torch.is_tensor(image):
-            if torch.max(image) <= 1:
+            if image.ndim == 2:
+                image = image.unsqueeze(-1).expand(-1, -1, 3)
+            if image.ndim == 2:
+                image = image.unsqueeze(-1).expand(-1, -1, 3)
+            if torch.max(image) <= 1.0:
                 image = image * 255
             image = image.to(torch.uint8)
             image = image.squeeze(0)
