@@ -27,10 +27,10 @@ class LRScaleVariable:
                 "variable": ("FLOAT", {"defaultInput": True}),
             },
             "optional": {
-                "min_input": ("FLOAT", {"default": cls.DEFAULT_MIN_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "max_input": ("FLOAT", {"default": cls.DEFAULT_MAX_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "min_output": ("FLOAT", {"default": cls.DEFAULT_MIN_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
-                "max_output": ("FLOAT", {"default": cls.DEFAULT_MAX_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "input_minimum_leftside": ("FLOAT", {"default": cls.DEFAULT_MIN_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "input_maximum_leftside": ("FLOAT", {"default": cls.DEFAULT_MAX_INPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "output_minimum_rightside": ("FLOAT", {"default": cls.DEFAULT_MIN_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "output_maximum_rightside": ("FLOAT", {"default": cls.DEFAULT_MAX_OUTPUT, "min": -1000.0, "max": 1000.0, "step": 0.01}),
             }
         }
 
@@ -40,31 +40,31 @@ class LRScaleVariable:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/util"
 
-    def scale(self, variable=None, min_input=None, max_input=None, min_output=None, max_output=None):
+    def scale(self, variable=None, input_minimum_leftside=None, input_maximum_leftside=None, output_minimum_rightside=None, output_maximum_rightside=None):
         """
         Scales the input variable from the input range [min_input, max_input] to the output range [min_output, max_output].
 
         Parameters:
         variable (float): The input variable to be scaled.
-        min_input (float): The minimum value of the input range.
-        max_input (float): The maximum value of the input range.
-        min_output (float): The minimum value of the output range.
-        max_output (float): The maximum value of the output range.
+        input_minimum_leftside (float): The minimum value of the input range.
+        input_maximum_leftside (float): The maximum value of the input range.
+        output_minimum_rightside (float): The minimum value of the output range.
+        output_maximum_rightside (float): The maximum value of the output range.
 
         Returns:
         float: The scaled variable.
         """
         if variable is None:
             variable = self.DEFAULT_VARIABLE
-        if min_input is None:
-            min_input = self.DEFAULT_MIN_INPUT
-        if max_input is None:
-            max_input = self.DEFAULT_MAX_INPUT
-        if min_output is None:
-            min_output = self.DEFAULT_MIN_OUTPUT
-        if max_output is None:
-            max_output = self.DEFAULT_MAX_OUTPUT
-        return (lt.scale_variable(variable, min_input, max_input, min_output, max_output),)
+        if input_minimum_leftside is None:
+            input_minimum_leftside = self.DEFAULT_MIN_INPUT
+        if input_maximum_leftside is None:
+            input_maximum_leftside = self.DEFAULT_MAX_INPUT
+        if output_minimum_rightside is None:
+            output_minimum_rightside = self.DEFAULT_MIN_OUTPUT
+        if output_maximum_rightside is None:
+            output_maximum_rightside = self.DEFAULT_MAX_OUTPUT
+        return (lt.scale_variable(variable, input_minimum_leftside, input_maximum_leftside, output_minimum_rightside, output_maximum_rightside),)
 
 
 class EquationEvaluator:
