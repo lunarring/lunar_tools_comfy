@@ -190,8 +190,11 @@ class LRFloat2Boolean:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "x": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
-                "condition": ("STRING", {"multiline": False, "default": "x >= 0"}),
+                "a": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
+                "b": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "c": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "d": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01}),
+                "condition": ("STRING", {"multiline": False, "default": "a + b + c + d >= 0"}),
             }
         }
 
@@ -201,9 +204,12 @@ class LRFloat2Boolean:
     OUTPUT_NODE = False
     CATEGORY = "LunarRing/util"
 
-    def convert(self, x=0, condition="float_input >= 0"):
+    def convert(self, a=0, b=0, c=0, d=0, condition="a + b + c + d >= 0"):
         # Replace variable names with their values
-        condition = condition.replace('x', str(x))
+        condition = condition.replace('a', str(a))
+        condition = condition.replace('b', str(b))
+        condition = condition.replace('c', str(c))
+        condition = condition.replace('d', str(d))
 
         # Use regex to ensure only safe characters are in the condition
         if not re.match(r'^[\d\s\+\-\*/\(\)\.>=<]+$', condition):
@@ -237,6 +243,9 @@ class LRBoolean2Float:
 
     def convert(self, boolean_input):
         return (1.0 if boolean_input else 0.0,)
+
+
+
 
 class LRBooleanTransition:
     def __init__(self):
