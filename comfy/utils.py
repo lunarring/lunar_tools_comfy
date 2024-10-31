@@ -565,6 +565,91 @@ class LRSaveToFile:
             print("Input data is the same as the last input. Skipping save.")
         return []
 
+
+import base64
+from io import BytesIO
+from PIL import Image
+
+class LRShowImage:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "image": ("IMAGE", {"forceInput": True}),
+            },
+        }
+
+    INPUT_IS_LIST = True
+    RETURN_TYPES = ()
+    FUNCTION = "notify"
+    OUTPUT_NODE = True
+    OUTPUT_IS_LIST = (True,)
+
+    CATEGORY = "LunarRing/util"
+
+    def notify(self, image):
+        # Convert the input image array to a PIL image
+        if isinstance(image, list) and len(image) > 0:
+            image = Image.fromarray(image[0])
+
+        # Convert the image to a base64 string
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")
+        image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # Return the base64 image string for the frontend
+        return {"ui": {"image": image_base64}, "result": (image_base64,)}
+
+class LRARCurve:
+    def __init__(self):
+        self.vmin = 0
+        self.vmax = 1
+        self.t1 = 1
+        self.t2 = 2
+        self.t3 = 3
+        self.t4 = 4
+    
+    @classmethod
+    def INPUT_TYPES(self,s):
+        return {
+            "required": {
+                "trigger": ("BOOLEAN"),
+                "vmin": ("FLOAT", {"default": self.vmin}),
+                "vmax": ("FLOAT", {"default": self.vmax}),
+                "t1": ("FLOAT", {"default": self.t1}),
+                "t2": ("FLOAT", {"default": self.t2}),
+                "t3": ("FLOAT", {"default": self.t3}),
+                "t4": ("FLOAT", {"default": self.t4}),
+            },
+        }
+
+    INPUT_IS_LIST = True
+    RETURN_TYPES = ()
+    FUNCTION = "update"
+    OUTPUT_NODE = True
+    OUTPUT_IS_LIST = (True,)
+
+    CATEGORY = "LunarRing/util"
+    
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")    
+
+    def update(self, trigger, vmin=None, vmax=None, t1=None, t2=None, t3=None, t4=None):
+        
+        # # Convert the input image array to a PIL image
+        # if isinstance(image, list) and len(image) > 0:
+        #     image = Image.fromarray(image[0])
+
+        # # Convert the image to a base64 string
+        # buffered = BytesIO()
+        # image.save(buffered, format="PNG")
+        # image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # # Return the base64 image string for the frontend
+        # return {"ui": {"image": image_base64}, "result": (image_base64,)}
+        
+
 # # Add custom API routes, using router
 # from aiohttp import web
 # from server import PromptServer

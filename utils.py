@@ -1,10 +1,10 @@
 from collections import deque
-import random
 import time
 import numpy as np
-import lunar_tools as lt
-import re
-
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from io import BytesIO
+from PIL import Image
 
 class SimpleNumberBuffer:
     """
@@ -194,3 +194,60 @@ class NumpyArrayBuffer:
         self.buffer = deque(self.buffer, maxlen=buffer_size)
 
 
+class ARCurve:
+    def __init__(self, vmin, vmax, t1, t2, t3, t4):
+        self.vmin = vmin
+        self.vmax = vmax
+        self.t1 = t1
+        self.t2 = t2
+        self.t3 = t3
+        self.t4 = t4
+        self.total_duration = t1 + t2 + t3 + t4
+        self.start_time = time.time()
+
+    def _compute_value(self, elapsed_time):
+        # Determine the value based on the elapsed time within the cycle
+        if elapsed_time <= self.t1:
+            return self.vmin
+        elif elapsed_time <= self.t1 + self.t2:
+            return self.vmin + (self.vmax - self.vmin) * ((elapsed_time - self.t1) / self.t2)
+        elif elapsed_time <= self.t1 + self.t2 + self.t3:
+            return self.vmax
+        elif elapsed_time <= self.total_duration:
+            return self.vmax - (self.vmax - self.vmin) * ((elapsed_time - self.t1 - self.t2 - self.t3) / self.t4)
+        else:
+            return self.vmin  # Reset value at the end of the period
+        
+    def reset_timer(self):
+        self.start_time = time.time()
+
+    def return_value(self):
+        current_time = time.time()
+        elapsed_time = (current_time - self.start_time) % self.total_duration
+        return self._compute_value(elapsed_time)
+
+    def get_curve_image(self):
+        # Generate time values for the entire duration of the function
+        time_values = np.linspace(0, self.total_duration, 500)
+        function_values = [self._compute_value(t) for t in time_values]
+
+        # Plotting
+        fig, ax = plt.subplots()
+        ax.plot(time_values, function_values)
+        ax.set_xlabel("Time")
+        ax.set_ylabel("Value")
+        ax.legend()
+
+        # Convert plot to image (NumPy array)
+        canvas = FigureCanvas(fig)
+        buf = BytesIO()
+        canvas.print_png(buf)
+        buf.seek(0)
+            
+        # Open image with PIL and convert to a numpy array with RGB format
+        image = Image.open(buf)
+        image_np = np.array(image)
+    
+        buf.close()
+        plt.close(fig)  # Close the figure to free memory
+        return image_np

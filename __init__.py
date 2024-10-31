@@ -82,7 +82,7 @@ except Exception as e:
 
     
 try:
-    from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd, LRSaveToFile, CycleVariableGenerator
+    from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd, LRSaveToFile, CycleVariableGenerator, LRShowImage, LRARCurve
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
@@ -95,6 +95,8 @@ try:
     NODE_CLASS_MAPPINGS["LR DelayString"] = LRDelayString
     NODE_CLASS_MAPPINGS["LR SaveToFile"] = LRSaveToFile
     NODE_CLASS_MAPPINGS["LR CycleVariableGenerator"] = CycleVariableGenerator
+    NODE_CLASS_MAPPINGS["LR Show_Image"] = LRShowImage
+    NODE_CLASS_MAPPINGS["LR ARCurve"] = LRARCurve
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 
@@ -110,3 +112,8 @@ except Exception as e:
 #     NODE_CLASS_MAPPINGS["LR Teleport"] = Teleport
 # except Exception as e:
 #     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
+
+
+
+WEB_DIRECTORY = "./web"
+
