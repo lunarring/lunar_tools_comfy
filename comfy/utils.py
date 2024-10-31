@@ -705,7 +705,7 @@ class LRARCurve:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "trigger": ("BOOLEAN", {"default": False}),
+                "trigger": ("BOOLEAN", {"defaultInput": False}),
                 "vmin": ("FLOAT", {"default": 0}),
                 "vmax": ("FLOAT", {"default": 1}),
                 "t1": ("FLOAT", {"default": 2}),
@@ -738,7 +738,9 @@ class LRARCurve:
             self.t3 = t3
             self.t4 = t4
             self.ar_curve = ARCurve(self.vmin, self.vmax, self.t1, self.t2, self.t3, self.t4)
-            print(f'initializing arcurve')
+            
+        if trigger == True:
+            self.ar_curve.reset_timer()
             
         val = self.ar_curve.return_value()
         is_new_cycle = False
