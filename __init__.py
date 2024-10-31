@@ -97,7 +97,8 @@ try:
         LRSaveToFile,
         CycleVariableGenerator,
         LRBoolean2Float,
-        LRFloat2Boolean
+        LRFloat2Boolean,
+        LRBooleanTransition
     )
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
@@ -113,6 +114,8 @@ try:
     NODE_CLASS_MAPPINGS["LR CycleVariableGenerator"] = CycleVariableGenerator
     NODE_CLASS_MAPPINGS["LR Boolean2Float"] = LRBoolean2Float
     NODE_CLASS_MAPPINGS["LR Float2Boolean"] = LRFloat2Boolean
+    NODE_CLASS_MAPPINGS["LR BooleanTransition"] = LRBooleanTransition
+
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 

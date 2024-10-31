@@ -191,7 +191,7 @@ class LRFloat2Boolean:
         return {
             "required": {
                 "x": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
-                "condition": ("STRING", {"multiline": False, "default": "float_input >= 0"}),
+                "condition": ("STRING", {"multiline": False, "default": "x >= 0"}),
             }
         }
 
@@ -237,6 +237,34 @@ class LRBoolean2Float:
 
     def convert(self, boolean_input):
         return (1.0 if boolean_input else 0.0,)
+
+class LRBooleanTransition:
+    def __init__(self):
+        self.last_input = False
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "boolean_input": ("BOOLEAN", {"default": False, "defaultInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("BOOLEAN",)
+    RETURN_NAMES = ("transition_output",)
+    FUNCTION = "check_transition"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def check_transition(self, boolean_input):
+        transition_occurred = self.last_input is False and boolean_input is True
+        self.last_input = boolean_input
+        return (transition_occurred,)
+
 
 
 class LRNumberBuffer:
