@@ -178,6 +178,66 @@ class MovingWindowCalculator:
         return (result,)
 
 
+class LRFloat2Boolean:
+    def __init__(self):
+        pass
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "x": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
+                "condition": ("STRING", {"multiline": False, "default": "float_input >= 0"}),
+            }
+        }
+
+    RETURN_TYPES = ("BOOLEAN",)
+    RETURN_NAMES = ("condition_boolean",)
+    FUNCTION = "convert"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def convert(self, x=0, condition="float_input >= 0"):
+        # Replace variable names with their values
+        condition = condition.replace('x', str(x))
+
+        # Use regex to ensure only safe characters are in the condition
+        if not re.match(r'^[\d\s\+\-\*/\(\)\.>=<]+$', condition):
+            raise ValueError("Invalid characters in condition. Only digits, spaces, and the characters + - * / ( ) . >= < are allowed.")
+
+        try:
+            result = eval(condition)
+        except Exception as e:
+            raise ValueError(f"Error evaluating condition: {str(e)}")
+
+        return (bool(result),)
+
+class LRBoolean2Float:
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "boolean_input": ("BOOLEAN", {"default": False, "defaultInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    RETURN_NAMES = ("float_output",)
+    FUNCTION = "convert"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def convert(self, boolean_input):
+        return (1.0 if boolean_input else 0.0,)
+
 
 class LRNumberBuffer:
     DEFAULT_BUFFER_SIZE = 500
