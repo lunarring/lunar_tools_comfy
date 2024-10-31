@@ -256,6 +256,60 @@ class LRRandomPromptTimed:
             return ""
 
 
+class LRMultiPromptInjector:
+    def __init__(self):
+        self.prompt_data = None
+        self.current_prompt = ""
+        self.current_index = 0
+        
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "json_prompt_data": ("DICT", {"defaultInput": True}),
+                "inject_new_prompt": ("BOOLEAN", {"default": False, "defaultInput": True}),
+                "randomize": ("BOOLEAN", {"default": False}),
+            }
+        }
+    
+    RETURN_TYPES = ("STRING", )
+    RETURN_NAMES = ("Current Prompt", )
+    FUNCTION = "get_current_prompt"
+    OUTPUT_NODE = True
+    CATEGORY = "LunarRing/prompt"
+
+    def get_current_prompt(self, json_prompt_data, inject_new_prompt, randomize):
+        if self.prompt_data != json_prompt_data:
+            # If the prompt data has changed, reset
+            self.prompt_data = json_prompt_data
+            self.current_index = 0  # Reset index on new data
+            self.current_prompt = self._get_next_prompt(randomize)
+        elif inject_new_prompt:
+            # Time to pick a new prompt
+            self.current_prompt = self._get_next_prompt(randomize)
+        # Return the current prompt
+        return (self.current_prompt, )
+
+    def _get_next_prompt(self, randomize):
+        if self.prompt_data and len(self.prompt_data) > 0:
+            if randomize:
+                return random.choice(self.prompt_data)['prompt']
+            else:
+                prompt = self.prompt_data[self.current_index]['prompt']
+                self.current_index = (self.current_index + 1) % len(self.prompt_data)  # Loop back to start
+                return prompt
+        else:
+            return ""
+
+
+
+
+
+
 
 class LRRandomPromptTimedMulti:
     def __init__(self):
