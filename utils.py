@@ -115,7 +115,6 @@ class SimpleNumberBuffer:
         """
         self.normalize = normalize
 
-
 def scale_variable(variable, min_input, max_input, min_output, max_output):
     """
     Scales the input variable from the input range [min_input, max_input] to the output range [min_output, max_output].
@@ -136,62 +135,6 @@ def scale_variable(variable, min_input, max_input, min_output, max_output):
     scaled_variable = min_output + (variable - min_input) * (max_output - min_output) / (max_input - min_input)
     return scaled_variable
 
-
-class NumpyArrayBuffer:
-    def __init__(self, buffer_size=500, default_return_value=None):
-        """
-        Initializes the NumpyArrayBuffer with a specified buffer size.
-
-        Parameters
-        ----------
-        buffer_size : int
-            The maximum size of the buffer.
-        default_return_value : numpy array, optional
-            The default return value if the buffer is empty.
-        """
-        self.buffer_size = buffer_size
-        self.default_return_value = default_return_value
-        self.buffer = deque(maxlen=buffer_size)
-        self.array_shape = None
-
-    def append(self, array):
-        """
-        Appends a new numpy array to the buffer. Sets the array shape if not already set.
-
-        Parameters
-        ----------
-        array : numpy array
-            The numpy array to be appended to the buffer.
-        """
-        if self.array_shape is None:
-            self.array_shape = array.shape
-        if array.shape == self.array_shape:
-            self.buffer.append(array)
-        else:
-            raise ValueError(f"Array shape {array.shape} does not match buffer shape {self.array_shape}")
-
-    def get_last(self):
-        """
-        Returns the last numpy array in the buffer or the default return value if the buffer is empty.
-
-        Returns
-        -------
-        numpy array
-            The last numpy array in the buffer or the default return value if the buffer is empty.
-        """
-        return self.buffer[-1] if len(self.buffer) > 0 else self.default_return_value
-
-    def set_buffer_size(self, buffer_size):
-        """
-        Sets a new buffer size and adjusts the buffer accordingly.
-
-        Parameters
-        ----------
-        buffer_size : int
-            The new maximum size of the buffer.
-        """
-        self.buffer_size = buffer_size
-        self.buffer = deque(self.buffer, maxlen=buffer_size)
 
 
 class ARCurve:

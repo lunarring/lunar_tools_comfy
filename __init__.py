@@ -62,7 +62,7 @@ except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} ghosting_generator: {e}")
     
 try:
-    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRMultiPrompt, LRRandomPromptTimed, LRRandomPromptTimedMulti
+    from .comfy.prompt_tools import LRGPT4Vision, LRMic2Text, LRJsonPromptReader, LRJsonPromptScheduler, LRMultiPrompt, LRRandomPromptTimed, LRRandomPromptTimedMulti, LRMultiPromptInjector
     NODE_CLASS_MAPPINGS["LR GPT4Vision"] = LRGPT4Vision
     NODE_CLASS_MAPPINGS["LR Mic2Text"] = LRMic2Text
     NODE_CLASS_MAPPINGS["LR JsonPromptReader"] = LRJsonPromptReader
@@ -70,6 +70,7 @@ try:
     NODE_CLASS_MAPPINGS["LR MultiPrompt"] = LRMultiPrompt
     NODE_CLASS_MAPPINGS["LR RandomPromptTimed"] = LRRandomPromptTimed
     NODE_CLASS_MAPPINGS["LR LRRandomPromptTimedMulti"] = LRRandomPromptTimedMulti
+    NODE_CLASS_MAPPINGS["LR MultiPromptInjector"] = LRMultiPromptInjector
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} prompt_tools: {e}")
 
@@ -83,6 +84,24 @@ except Exception as e:
     
 try:
     from .comfy.utils import LRNumberBuffer, DrawBufferImage, LRDelayString, EquationEvaluator, MovingWindowCalculator, DerivativeBuffer, DerivativeVariable, RandomUniformVariableGenerator, LRScaleVariable, LRRecursiveAdd, LRSaveToFile, CycleVariableGenerator, LRShowImage, LRARCurve
+
+    from .comfy.utils import (
+        LRNumberBuffer,
+        DrawBufferImage,
+        LRDelayString,
+        EquationEvaluator,
+        MovingWindowCalculator,
+        DerivativeBuffer,
+        DerivativeVariable,
+        RandomUniformVariableGenerator,
+        LRScaleVariable,
+        LRRecursiveAdd,
+        LRSaveToFile,
+        CycleVariableGenerator,
+        LRBoolean2Float,
+        LRFloat2Boolean,
+        LRBooleanTransition
+    )
     NODE_CLASS_MAPPINGS["LR ScaleVariable"] = LRScaleVariable
     NODE_CLASS_MAPPINGS["LR NumberBuffer"] = LRNumberBuffer
     NODE_CLASS_MAPPINGS["LR DerivativeBuffer"] = DerivativeBuffer
@@ -97,6 +116,10 @@ try:
     NODE_CLASS_MAPPINGS["LR CycleVariableGenerator"] = CycleVariableGenerator
     NODE_CLASS_MAPPINGS["LR Show_Image"] = LRShowImage
     NODE_CLASS_MAPPINGS["LR ARCurve"] = LRARCurve
+    NODE_CLASS_MAPPINGS["LR Boolean2Float"] = LRBoolean2Float
+    NODE_CLASS_MAPPINGS["LR Float2Boolean"] = LRFloat2Boolean
+    NODE_CLASS_MAPPINGS["LR BooleanTransition"] = LRBooleanTransition
+
 except Exception as e:
     print(f"{IMPORT_ERROR_MESSAGE} utils: {e}")
 

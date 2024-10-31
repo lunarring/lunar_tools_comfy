@@ -178,6 +178,94 @@ class MovingWindowCalculator:
         return (result,)
 
 
+class LRFloat2Boolean:
+    def __init__(self):
+        pass
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+    
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "x": ("FLOAT", {"default": 0.0, "min": -1000.0, "max": 1000.0, "step": 0.01, "defaultInput": True}),
+                "condition": ("STRING", {"multiline": False, "default": "x >= 0"}),
+            }
+        }
+
+    RETURN_TYPES = ("BOOLEAN",)
+    RETURN_NAMES = ("condition_boolean",)
+    FUNCTION = "convert"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def convert(self, x=0, condition="float_input >= 0"):
+        # Replace variable names with their values
+        condition = condition.replace('x', str(x))
+
+        # Use regex to ensure only safe characters are in the condition
+        if not re.match(r'^[\d\s\+\-\*/\(\)\.>=<]+$', condition):
+            raise ValueError("Invalid characters in condition. Only digits, spaces, and the characters + - * / ( ) . >= < are allowed.")
+
+        try:
+            result = eval(condition)
+        except Exception as e:
+            raise ValueError(f"Error evaluating condition: {str(e)}")
+
+        return (bool(result),)
+
+class LRBoolean2Float:
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "boolean_input": ("BOOLEAN", {"default": False, "defaultInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("FLOAT",)
+    RETURN_NAMES = ("float_output",)
+    FUNCTION = "convert"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def convert(self, boolean_input):
+        return (1.0 if boolean_input else 0.0,)
+
+class LRBooleanTransition:
+    def __init__(self):
+        self.last_input = False
+
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")
+        
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "boolean_input": ("BOOLEAN", {"default": False, "defaultInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("BOOLEAN",)
+    RETURN_NAMES = ("transition_output",)
+    FUNCTION = "check_transition"
+    OUTPUT_NODE = False
+    CATEGORY = "LunarRing/util"
+
+    def check_transition(self, boolean_input):
+        transition_occurred = self.last_input is False and boolean_input is True
+        self.last_input = boolean_input
+        return (transition_occurred,)
+
+
 
 class LRNumberBuffer:
     DEFAULT_BUFFER_SIZE = 500
@@ -599,6 +687,8 @@ class LRShowImage:
 
         # Return the base64 image string for the frontend
         return {"ui": {"image": image_base64}, "result": (image_base64,)}
+    
+from ..utils import ARCurve
 
 class LRARCurve:
     def __init__(self):
@@ -608,26 +698,29 @@ class LRARCurve:
         self.t2 = 2
         self.t3 = 3
         self.t4 = 4
+        
+        self.ar_curve = ARCurve(self.vmin, self.vmax, self.t1, self.t2, self.t3, self.t4)
     
     @classmethod
-    def INPUT_TYPES(self,s):
+    def INPUT_TYPES(cls):
         return {
             "required": {
-                "trigger": ("BOOLEAN"),
-                "vmin": ("FLOAT", {"default": self.vmin}),
-                "vmax": ("FLOAT", {"default": self.vmax}),
-                "t1": ("FLOAT", {"default": self.t1}),
-                "t2": ("FLOAT", {"default": self.t2}),
-                "t3": ("FLOAT", {"default": self.t3}),
-                "t4": ("FLOAT", {"default": self.t4}),
+                "trigger": ("BOOLEAN", {"default": False}),
+                "vmin": ("FLOAT", {"default": 0}),
+                "vmax": ("FLOAT", {"default": 1}),
+                "t1": ("FLOAT", {"default": 2}),
+                "t2": ("FLOAT", {"default": 3}),
+                "t3": ("FLOAT", {"default": 4}),
+                "t4": ("FLOAT", {"default": 5}),
             },
         }
 
-    INPUT_IS_LIST = True
-    RETURN_TYPES = ()
+    # INPUT_IS_LIST = True
+    RETURN_TYPES = ("FLOAT", "BOOLEAN", )
+    RETURN_NAMES = ("value", "is_new_cycle", )
     FUNCTION = "update"
     OUTPUT_NODE = True
-    OUTPUT_IS_LIST = (True,)
+    # OUTPUT_IS_LIST = (True,)
 
     CATEGORY = "LunarRing/util"
     
@@ -636,6 +729,19 @@ class LRARCurve:
         return float("NaN")    
 
     def update(self, trigger, vmin=None, vmax=None, t1=None, t2=None, t3=None, t4=None):
+        
+        if vmin != self.vmin or vmax != self.vmax or t1 != self.t1 or t2 != self.t2 or t3 != self.t3 or t4 != self.t4:
+            self.vmin = vmin
+            self.vmax = vmax
+            self.t1 = t1
+            self.t2 = t2
+            self.t3 = t3
+            self.t4 = t4
+            self.ar_curve = ARCurve(self.vmin, self.vmax, self.t1, self.t2, self.t3, self.t4)
+            print(f'initializing arcurve')
+            
+        val = self.ar_curve.return_value()
+        is_new_cycle = False
         
         # # Convert the input image array to a PIL image
         # if isinstance(image, list) and len(image) > 0:
@@ -648,6 +754,10 @@ class LRARCurve:
 
         # # Return the base64 image string for the frontend
         # return {"ui": {"image": image_base64}, "result": (image_base64,)}
+        
+        # import pdb; pdb.set_trace()
+        
+        return (val, is_new_cycle)
         
 
 # # Add custom API routes, using router
