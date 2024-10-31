@@ -662,6 +662,113 @@ class LRSaveToFile:
             print("Input data is the same as the last input. Skipping save.")
         return []
 
+
+import base64
+from io import BytesIO
+from PIL import Image
+
+class LRShowImage:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "image": ("IMAGE", {"forceInput": True}),
+            },
+        }
+
+    INPUT_IS_LIST = True
+    RETURN_TYPES = ()
+    FUNCTION = "notify"
+    OUTPUT_NODE = True
+    OUTPUT_IS_LIST = (True,)
+
+    CATEGORY = "LunarRing/util"
+
+    def notify(self, image):
+        # Convert the input image array to a PIL image
+        if isinstance(image, list) and len(image) > 0:
+            image = Image.fromarray(image[0])
+
+        # Convert the image to a base64 string
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")
+        image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # Return the base64 image string for the frontend
+        return {"ui": {"image": image_base64}, "result": (image_base64,)}
+    
+from ..utils import ARCurve
+
+class LRARCurve:
+    def __init__(self):
+        self.vmin = 0
+        self.vmax = 1
+        self.t1 = 1
+        self.t2 = 2
+        self.t3 = 3
+        self.t4 = 4
+        
+        self.ar_curve = ARCurve(self.vmin, self.vmax, self.t1, self.t2, self.t3, self.t4)
+    
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "trigger": ("BOOLEAN", {"default": False}),
+                "vmin": ("FLOAT", {"default": 0}),
+                "vmax": ("FLOAT", {"default": 1}),
+                "t1": ("FLOAT", {"default": 2}),
+                "t2": ("FLOAT", {"default": 3}),
+                "t3": ("FLOAT", {"default": 4}),
+                "t4": ("FLOAT", {"default": 5}),
+            },
+        }
+
+    # INPUT_IS_LIST = True
+    RETURN_TYPES = ("FLOAT", "BOOLEAN", )
+    RETURN_NAMES = ("value", "is_new_cycle", )
+    FUNCTION = "update"
+    OUTPUT_NODE = True
+    # OUTPUT_IS_LIST = (True,)
+
+    CATEGORY = "LunarRing/util"
+    
+    @classmethod 
+    def IS_CHANGED(cls, **inputs):
+        return float("NaN")    
+
+    def update(self, trigger, vmin=None, vmax=None, t1=None, t2=None, t3=None, t4=None):
+        
+        if vmin != self.vmin or vmax != self.vmax or t1 != self.t1 or t2 != self.t2 or t3 != self.t3 or t4 != self.t4:
+            self.vmin = vmin
+            self.vmax = vmax
+            self.t1 = t1
+            self.t2 = t2
+            self.t3 = t3
+            self.t4 = t4
+            self.ar_curve = ARCurve(self.vmin, self.vmax, self.t1, self.t2, self.t3, self.t4)
+            print(f'initializing arcurve')
+            
+        val = self.ar_curve.return_value()
+        is_new_cycle = False
+        
+        # # Convert the input image array to a PIL image
+        # if isinstance(image, list) and len(image) > 0:
+        #     image = Image.fromarray(image[0])
+
+        # # Convert the image to a base64 string
+        # buffered = BytesIO()
+        # image.save(buffered, format="PNG")
+        # image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # # Return the base64 image string for the frontend
+        # return {"ui": {"image": image_base64}, "result": (image_base64,)}
+        
+        # import pdb; pdb.set_trace()
+        
+        return (val, is_new_cycle)
+        
+
 # # Add custom API routes, using router
 # from aiohttp import web
 # from server import PromptServer
