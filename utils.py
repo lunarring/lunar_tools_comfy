@@ -151,22 +151,23 @@ class ARCurve:
     def _compute_value(self, elapsed_time):
         # Determine the value based on the elapsed time within the cycle
         if elapsed_time <= self.t1:
-            return self.vmin
+            return self.vmin, False
         elif elapsed_time <= self.t1 + self.t2:
-            return self.vmin + (self.vmax - self.vmin) * ((elapsed_time - self.t1) / self.t2)
+            return self.vmin + (self.vmax - self.vmin) * ((elapsed_time - self.t1) / self.t2), False
         elif elapsed_time <= self.t1 + self.t2 + self.t3:
-            return self.vmax
+            return self.vmax, False
         elif elapsed_time <= self.total_duration:
-            return self.vmax - (self.vmax - self.vmin) * ((elapsed_time - self.t1 - self.t2 - self.t3) / self.t4)
+            return self.vmax - (self.vmax - self.vmin) * ((elapsed_time - self.t1 - self.t2 - self.t3) / self.t4), False
         else:
-            return self.vmin  # Reset value at the end of the period
+            self.reset_timer()
+            return self.vmin, True
         
     def reset_timer(self):
         self.start_time = time.time()
 
     def return_value(self):
         current_time = time.time()
-        elapsed_time = (current_time - self.start_time) % self.total_duration
+        elapsed_time = (current_time - self.start_time)
         return self._compute_value(elapsed_time)
 
     def get_curve_image(self):
